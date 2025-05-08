@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Services\Webhooks;
+
+use App\DTOs\ParsedTransactionDto;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Repositories\Contracts\TransactionRepositoryInterface;
+use Illuminate\Cache\CacheManager;
+
+class CreateTransactionService
+{
+    private const LOCK_TIMEOUT = 10;
+    private const BLOCK_TIMEOUT = 5;
+
+    public function __construct(
+        private TransactionRepositoryInterface $transactionRepository,
+        private CacheManager $cacheManager
+    ) {}
+
+    /**
+     * Create a transaction.
+     * 
+     * @param ParsedTransactionDto $transaction
+     * @return Transaction
+     */
+    public function execute(ParsedTransactionDto $transaction): Transaction
+    {
+        # Assuming that user is the owner of the transaction
+        $defaultUser = User::first();
+        $lockKey = "transaction:{$transaction->reference}";
+
+        # Locking the transaction on app level to avoid race conditions, also handled on database level with unique index on reference
+        return $this->cacheManager->lock($lockKey, self::LOCK_TIMEOUT)->block(self::BLOCK_TIMEOUT, function () use ($transaction, $defaultUser) {
+            return $this->transactionRepository->firstOrCreate(
+                ['user_id' => $defaultUser->id, 'reference' => $transaction->reference],
+                [
+                    'amount' => $transaction->amount,
+                    'date' => $transaction->date,
+                    'meta' => $transaction->meta,
+                    'bank_type' => $transaction->bank_type,
+                ]
+            );
+        });
+    }
+}
