@@ -26,7 +26,7 @@ class ReceivePaymentNotificationController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $transactions = $request->all()['transactions'];
+        $transactions = $request->all();
         $this->paymentTransactionDispatcherService->dispatch($transactions);
         Log::info('Transactions dispatched', ['transactions' => $transactions]);
         return response()->json(['status' => Response::HTTP_OK]);
