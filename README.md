@@ -11,23 +11,23 @@ Endpoints
 
 - Send Payment Request
     - Purpose: Accepts payment request from user with basic validation.
-    - Process: Builds an XML-formatted payload based on the request data. and  Logs the generated XML for further processing
+    - Process: Builds an XML-formatted payload based on the request data. and  Logs the generated XML for further processing.
 
 - Postman Collection
     - https://www.postman.com/abdulazizaladwi/online-wallet/overview    
 
 ## Tech Highlights
-- Regarding Receive Payment Notification Endpoint
+- Regarding Receive Payment Notification Endpoint:
     - Used background jobs to process received transactions, created a factory method to return bank parser based on the transaction format.
     - Mapped Parsed Transactions to DTOs to provide some sort of Data encapsulation & validation, and to make it cleaner.
     - Used Laravel horizon to handle background jobs.
     - Locked transaction creation from application level, to prevent race condition.
-    - Also added unique key on `reference` to prevent race condition on database level
+    - Also added unique key on `reference` to prevent race condition on database level.
 - Regarding Send Payment Request Endpoint:
     - Used Background jobs to build the xml body from the request data.
     - Used laravel pipeline to build xml body based on pipes.
     - Used DTO to pass the request data over pipes.
-    - Used Constants/Enums to prevent magic numbers/types and make more readable
+    - Used Constants/Enums to prevent magic numbers/types and make more readable.
     - Added a proper logs to track request processing.
 - Wrote feature and unit tests for the solution.
 
@@ -57,3 +57,6 @@ Endpoints
 ### 6. Queue Setup
 ##### Make sure that redis is running then run:
     php artisan horizon
+### Queue Setup
+##### To run tests:
+    php artisan test    
