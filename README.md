@@ -11,7 +11,10 @@ Endpoints
 
 - Send Payment Request
     - Purpose: Accepts payment request from user with basic validation.
-    - Process: Builds an XML-formatted payload based on the request data. and  Logs the generated XML for further processing 
+    - Process: Builds an XML-formatted payload based on the request data. and  Logs the generated XML for further processing
+
+- Postman Collection
+    - https://www.postman.com/abdulazizaladwi/online-wallet/overview    
 
 ## Tech Highlights
 - Regarding Receive Payment Notification Endpoint
