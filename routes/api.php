@@ -1,3 +1,3 @@
 <?php
 
-require __DIR__.'/webhooks.php';
+require __DIR__.'/integration.php';
