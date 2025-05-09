@@ -4,8 +4,8 @@ namespace App\Services\Webhooks;
 
 use App\DTOs\ParsedTransactionDto;
 use App\Models\Transaction;
-use App\Models\User;
 use App\Repositories\Contracts\TransactionRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Cache\CacheManager;
 
 class CreateTransactionService
@@ -15,7 +15,8 @@ class CreateTransactionService
 
     public function __construct(
         private TransactionRepositoryInterface $transactionRepository,
-        private CacheManager $cacheManager
+        private CacheManager $cacheManager,
+        private UserRepositoryInterface $userRepository
     ) {}
 
     /**
@@ -26,8 +27,8 @@ class CreateTransactionService
      */
     public function execute(ParsedTransactionDto $transaction): Transaction
     {
-        # Assuming that user is the owner of the transaction
-        $defaultUser = User::first();
+        # Assuming that user is the owner of the transaction, for simplicity, get first user
+        $defaultUser = $this->userRepository->first();
         $lockKey = "transaction:{$transaction->reference}";
 
         # Locking the transaction on app level to avoid race conditions, also handled on database level with unique index on reference
