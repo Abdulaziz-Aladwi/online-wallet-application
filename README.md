@@ -2,7 +2,7 @@
 # Online Wallet Application
 
 ## Description:
-This is a a simple laravel 12 application that provides two REST endpoints for handling payment operations: one for receiving payment notifications and another to let user sending payment requests.
+This is a simple laravel 12 application that provides two REST endpoints for handling payment operations: one for receiving payment notifications and another to let user sending payment requests.
 
 Endpoints
 - Receive Payment Notification:
