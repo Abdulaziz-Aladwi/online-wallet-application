@@ -23,12 +23,14 @@ Endpoints
     - Used Laravel horizon to handle background jobs.
     - Locked transaction creation from application level, to prevent race condition.
     - Also added unique key on `reference` to prevent race condition on database level.
+    - For simplicity, to Assign user to a transaction, i retireived the first user form the db.
 - Regarding Send Payment Request Endpoint:
     - Used Background jobs to build the xml body from the request data.
     - Used laravel pipeline to build xml body based on pipes.
     - Used DTO to pass the request data over pipes.
     - Used Constants/Enums to prevent magic numbers/types and make more readable.
     - Added a proper logs to track request processing.
+    - User calling this API should be authenticated but For simplicity instead of implementing authentication, we got some of User (sender) data from the request.
 - Wrote feature and unit tests for the solution.
 
 ## Tech Stack:
@@ -57,6 +59,7 @@ Endpoints
 ### 6. Queue Setup
 ##### Make sure that redis is running then run:
     php artisan horizon
-### Queue Setup
-##### To run tests:
+###  To run tests
     php artisan test    
+###  To run Seeder
+    php artisan db:seed    
