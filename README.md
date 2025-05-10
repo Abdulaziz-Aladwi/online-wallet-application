@@ -14,7 +14,7 @@ Endpoints
     - Process: Builds an XML-formatted payload based on the request data. and  Logs the generated XML for further processing.
 
 - Postman Collection
-    - https://www.postman.com/abdulazizaladwi/online-wallet/overview    
+    - https://www.postman.com/orange-astronaut-877368/online-wallet/overview 
 
 ## Tech Highlights
 - Regarding Receive Payment Notification Endpoint:
